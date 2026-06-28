@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "🔄 Updating Homebrew..."
+brew update
+
+echo "⬆️  Upgrading formulae and casks..."
+brew upgrade
+
+echo "🗑️  Removing orphaned dependencies..."
+brew autoremove
+
+echo "🧹 Cleaning up..."
+brew cleanup -s --prune=all
+
+echo "📦 Outdated (pinned or auto-updating packages may appear):"
+brew outdated || true
+
+echo "🧪 Running health checks..."
+brew doctor || true
+
+echo "✅ All done!"
