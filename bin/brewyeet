@@ -1,17 +1,18 @@
 #!/bin/bash
-set -euo pipefail
+
+start=$(date +%s)
 
 echo "🔄 Updating Homebrew..."
-brew update
+brew update || true
 
 echo "⬆️  Upgrading formulae and casks..."
-brew upgrade
+brew upgrade --greedy || true
 
 echo "🗑️  Removing orphaned dependencies..."
-brew autoremove
+brew autoremove || true
 
 echo "🧹 Cleaning up..."
-brew cleanup -s --prune=all
+brew cleanup -s --prune=all || true
 
 echo "📦 Outdated (pinned or auto-updating packages may appear):"
 brew outdated || true
@@ -19,4 +20,4 @@ brew outdated || true
 echo "🧪 Running health checks..."
 brew doctor || true
 
-echo "✅ All done!"
+echo "✅ All done! ($(( $(date +%s) - start ))s)"
